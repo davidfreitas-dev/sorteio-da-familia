@@ -36,7 +36,8 @@ defineExpose({explode});
       v-if="result.drawn"
       :text="`Não esquece a limpeza da igreja amanhã, hein ${result.name}?! 😉`"
       class="my-3 animate__animated animate__zoomIn"
-      size="md"
+      weight="semibold"
+      size="xl"
     />
   </div>
 </template>

@@ -8,7 +8,7 @@ import { PhHeart } from '@phosphor-icons/vue';
       Sorteio da Família 🙏
     </h1>
 
-    <p class="flex justify-center items-center text-sm text-gray-700">
+    <p class="flex justify-center items-center text-lg text-gray-700">
       Desenvolvido com 
       <PhHeart
         :size="20"

@@ -30,7 +30,7 @@ const props = defineProps({
       'bg-secondary': color === 'secondary',
       'bg-success': color === 'success',
     }"
-    class="flex justify-center items-center gap-2 hover:opacity-80 disabled:bg-gray-400 text-white text-base font-medium uppercase border-none rounded-md cursor-pointer disabled:cursor-not-allowed transition-colors py-3 px-6 min-w-[150px]"
+    class="flex justify-center items-center gap-2 hover:opacity-80 disabled:bg-gray-400 text-white text-base font-medium uppercase border-none rounded-md cursor-pointer disabled:cursor-not-allowed transition-colors py-3 px-6 min-w-[175px]"
   >
     <ph-gift
       v-if="icon === 'gift'"

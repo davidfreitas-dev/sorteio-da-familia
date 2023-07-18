@@ -8,15 +8,22 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  weight: {
+    type: String,
+    default: ''
+  },
 });
 </script>
 
 <template>
   <span
     :class="{
-      'text-xs': size === 'sm',
-      'text-sm': size === 'md',
-      'text-md': size === 'lg',
+      'text-sm': size === 'sm',
+      'text-md': size === 'md',
+      'text-lg': size === 'lg',
+      'text-xl': size === 'xl',
+      'font-bold': weight === 'bold',
+      'font-semibold': weight === 'semibold',
     }"
     class="text-gray-700 font-sans"
   >
