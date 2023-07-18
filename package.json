@@ -1,0 +1,30 @@
+{
+  "name": "sorteio-da-familia",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.6",
+    "@phosphor-icons/vue": "^2.1.4",
+    "animate.css": "^4.1.1",
+    "axios": "^1.2.1",
+    "pinia": "^2.0.28",
+    "vue": "^3.2.45",
+    "vue-axios": "^3.5.2",
+    "vue-confetti-explosion": "^1.0.2",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "autoprefixer": "^10.4.13",
+    "eslint": "^8.36.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.0"
+  }
+}
