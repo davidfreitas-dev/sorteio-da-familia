@@ -30,21 +30,21 @@ const props = defineProps({
       'bg-secondary': color === 'secondary',
       'bg-success': color === 'success',
     }"
-    class="flex justify-center items-center gap-2 hover:opacity-80 disabled:bg-gray-400 text-white text-base font-medium uppercase border-none rounded-md cursor-pointer disabled:cursor-not-allowed transition-colors py-3 px-6 min-w-[175px]"
+    class="flex justify-center items-center gap-2 hover:opacity-80 disabled:bg-gray-400 text-white text-2xl font-medium uppercase border-none rounded-md cursor-pointer disabled:cursor-not-allowed transition-colors py-6 px-12 min-w-[175px]"
   >
     <ph-gift
       v-if="icon === 'gift'"
-      :size="24"
+      :size="36"
     />
 
     <ph-confetti
       v-if="icon === 'confeti'"
-      :size="24"
+      :size="36"
     />
 
     <ph-arrow-clockwise
       v-if="icon === 'reset'"
-      :size="24"
+      :size="36"
     />
 
     {{ text }}

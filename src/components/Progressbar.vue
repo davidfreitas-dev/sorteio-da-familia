@@ -12,7 +12,7 @@ const props = defineProps({
   <div class="relative w-full bg-gray-200 rounded">
     <div
       :style="{ width: progress + '%' }"
-      class="absolute top-0 left-0 h-2 transition-width duration-500 bg-success rounded-r"
+      class="absolute top-0 left-0 h-3 transition-width duration-500 bg-success rounded-r"
     />
   </div>
 </template>

@@ -22,10 +22,11 @@ const props = defineProps({
       'text-md': size === 'md',
       'text-lg': size === 'lg',
       'text-xl': size === 'xl',
+      'text-3xl': size === 'xxl',
       'font-bold': weight === 'bold',
       'font-semibold': weight === 'semibold',
     }"
-    class="text-gray-700 font-sans"
+    class="text-gray-700 text-center font-sans w-3/4 leading-tight"
   >
     {{ text }}
   </span>

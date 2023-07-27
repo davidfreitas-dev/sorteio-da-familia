@@ -4,14 +4,14 @@ import { PhHeart } from '@phosphor-icons/vue';
 
 <template>
   <div class="header h-32 flex flex-col justify-center items-center">
-    <h1 class="text-4xl font-bold mb-1">
+    <h1 class="text-6xl font-bold mt-10 mb-3">
       Sorteio da Família 🙏
     </h1>
 
-    <p class="flex justify-center items-center text-lg text-gray-700">
+    <p class="flex justify-center items-center text-2xl text-gray-700">
       Desenvolvido com 
       <PhHeart
-        :size="20"
+        :size="28"
         color="red"
         weight="fill"
         class="mx-1"

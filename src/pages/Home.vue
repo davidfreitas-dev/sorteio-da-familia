@@ -105,11 +105,11 @@ const resetDrawing = () => {
     <Text
       v-if="isOver"
       text="Todos os nomes foram sorteados!"
-      size="lg"
-      class="text-danger uppercase animate__animated animate__pulse animate__infinite" 
+      size="xxl"
+      class="text-danger mb-3 uppercase animate__animated animate__pulse animate__infinite" 
     />
 
-    <div class="actions h-32 flex justify-center items-center gap-5">
+    <div class="actions h-32 flex justify-center items-center gap-5 mb-8">
       <Button
         v-if="!isOver"
         text="Sortear"

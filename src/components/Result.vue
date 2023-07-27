@@ -37,7 +37,7 @@ defineExpose({explode});
       :text="`Não esquece a limpeza da igreja amanhã, hein ${result.name}?! 😉`"
       class="my-3 animate__animated animate__zoomIn"
       weight="semibold"
-      size="xl"
+      size="xxl"
     />
   </div>
 </template>
@@ -45,7 +45,7 @@ defineExpose({explode});
 <style scoped>
 #result {
   font-family: 'Lilita One', cursive;
-  font-size: 3.75rem/* 60px */;
+  font-size: 8rem/* 60px */;
   line-height: 1;
 }
 </style>
