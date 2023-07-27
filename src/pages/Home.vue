@@ -1,19 +1,34 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '@/services/firebase-firestore';
 import Progressbar from '@/components/Progressbar.vue';
 import Header from '@/components/Header.vue';
 import Result from '@/components/Result.vue';
 import Button from '@/components/Button.vue';
 import Text from '@/components/Text.vue';
 
-const names = ref([
-  { name: 'João', drawn: false },
-  { name: 'Maria', drawn: false },
-  { name: 'Pedro', drawn: false },
-]);
+const names = ref([]);
 
 const isOver = computed(() => {
   return names.value.some(name => name.drawn === false) ? false : true;
+});
+
+const loadData = async () => {
+  onSnapshot(collection(db, 'families'), (querySnapshot) => {
+    querySnapshot.forEach(doc => {
+      const document = {
+        ...{ id: doc.id },
+        ...doc.data()
+      };
+
+      names.value.push(document);
+    });
+  });
+};
+
+onMounted(async () => {
+  await loadData();
 });
 
 const shuffleArray = async (array) => {
