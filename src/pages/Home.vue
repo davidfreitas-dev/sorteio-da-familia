@@ -1,18 +1,13 @@
 <script setup>
 import { onMounted, computed, ref } from 'vue';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Progressbar from '@/components/Progressbar.vue';
-import Header from '@/components/Header.vue';
 import Result from '@/components/Result.vue';
 import Button from '@/components/Button.vue';
 import Text from '@/components/Text.vue';
 
 const names = ref([]);
-
-const isOver = computed(() => {
-  return names.value.some(name => name.drawn === false) ? false : true;
-});
 
 const loadData = async () => {
   onSnapshot(collection(db, 'families'), (querySnapshot) => {
@@ -29,6 +24,10 @@ const loadData = async () => {
 
 onMounted(async () => {
   await loadData();
+});
+
+const isOver = computed(() => {
+  return names.value.every(name => name.drawn);
 });
 
 const shuffleArray = async (array) => {
@@ -50,17 +49,23 @@ const result = ref(undefined);
 const resultRef = ref(undefined);
 
 const confirmResult = () => {
-  names.value.forEach((e) => {
-    if (e.name === result.value.name) {
-      e.drawn = true;
-    }
+  const resultId = result.value.id;
+
+  names.value.map(name => {
+    name.drawn = name.id === resultId;
+  });
+
+  const docRef = doc(db, 'families', resultId);
+
+  updateDoc(docRef, {
+    drawn: true
   });
 
   resultRef.value?.explode();
 };
 
+const progress = ref(100);
 const isDrawing = ref(false);
-const progress = ref(0);
 
 const startDrawing = async () => {
   progress.value = 1;
@@ -98,8 +103,8 @@ const resetDrawing = () => {
     name.drawn = false;
   });
   
+  progress.value = 100;
   result.value = undefined;
-  progress.value = 0;
 };
 </script>
 
@@ -109,8 +114,6 @@ const resetDrawing = () => {
       :progress="progress"
       class="mb-3"
     />
-
-    <Header />
     
     <Result
       ref="resultRef"
