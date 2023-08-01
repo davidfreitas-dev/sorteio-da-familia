@@ -4,6 +4,7 @@ import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Progressbar from '@/components/Progressbar.vue';
 import Result from '@/components/Result.vue';
+import Help from '@/components/Help.vue';
 import Text from '@/components/Text.vue';
 
 const names = ref([]);
@@ -161,6 +162,8 @@ onBeforeUnmount(() => {
       ref="resultRef"
       :result="result"
     />
+
+    <Help />
 
     <Text
       v-if="isOver"
