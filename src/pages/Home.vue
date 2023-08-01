@@ -34,15 +34,7 @@ const resultRef = ref(undefined);
 const confirmResult = () => {
   if (!result.value) return;
 
-  const resultId = result.value.id;
-
-  names.value.forEach(name => {
-    if (name.id === resultId) {
-      name.drawn = true;
-    }
-  });
-
-  const docRef = doc(db, 'families', resultId);
+  const docRef = doc(db, 'families', result.value.id);
 
   updateDoc(docRef, {
     drawn: true
@@ -103,19 +95,6 @@ const resetDrawing = () => {
   result.value = undefined;
 };
 
-const loadData = async () => {
-  onSnapshot(collection(db, 'families'), (querySnapshot) => {
-    querySnapshot.forEach(doc => {
-      const document = {
-        ...{ id: doc.id },
-        ...doc.data()
-      };
-
-      names.value.push(document);
-    });
-  });
-};
-
 const handleKeyPress = (event) => {
   if (event.ctrlKey){
     switch (event.keyCode) {
@@ -143,6 +122,24 @@ const addEventListeners = () => {
 
 const removeEventListeners = () => {
   window.removeEventListener('keyup', handleKeyPress);
+};
+
+const loadData = () => {
+  onSnapshot(collection(db, 'families'), (querySnapshot) => {
+    const families = [];
+
+    querySnapshot.forEach(doc => {
+      const family = {
+        id: doc.id,
+        name: doc.data().name,
+        drawn: doc.data().drawn
+      };
+
+      families.push(family);
+    });
+
+    names.value = families;
+  });
 };
 
 onMounted(() => {
