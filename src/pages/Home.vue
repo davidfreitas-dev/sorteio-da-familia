@@ -90,6 +90,12 @@ const startDrawing = async () => {
 
 const resetDrawing = () => {
   names.value.forEach(name => {
+    const docRef = doc(db, 'families', name.id);
+
+    updateDoc(docRef, {
+      drawn: false
+    });
+    
     name.drawn = false;
   });
   
