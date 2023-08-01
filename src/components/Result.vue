@@ -1,7 +1,6 @@
 <script setup>
 import { nextTick, ref } from 'vue';
 import ConfettiExplosion from 'vue-confetti-explosion';
-import Text from '@/components/Text.vue';
 
 const props = defineProps({
   result: {
@@ -32,14 +31,6 @@ defineExpose({explode});
       <div id="result">
         {{ $filters.resultFilter(result) }}
       </div>
-
-      <Text
-        v-if="result.drawn"
-        :text="`Não esquece a limpeza da igreja amanhã, hein ${result.name}?! 😉`"
-        class="my-3 animate__animated animate__zoomIn"
-        weight="semibold"
-        size="xxl"
-      />
     </div>
   </div>
 </template>
