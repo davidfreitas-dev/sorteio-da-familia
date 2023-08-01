@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue';
 import { PhGift, PhConfetti, PhArrowClockwise } from '@phosphor-icons/vue';
 
 const props = defineProps({
