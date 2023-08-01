@@ -36,8 +36,10 @@ const confirmResult = () => {
 
   const resultId = result.value.id;
 
-  names.value.map(name => {
-    name.drawn = name.id === resultId;
+  names.value.forEach(name => {
+    if (name.id === resultId) {
+      name.drawn = true;
+    }
   });
 
   const docRef = doc(db, 'families', resultId);
@@ -148,7 +150,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center h-screen w-full">
+  <div class="flex flex-col justify-center items-center h-screen w-full bg-gray-900">
     <Progressbar
       :progress="progress"
       class="mb-3"

@@ -25,20 +25,22 @@ defineExpose({explode});
 </script>
 
 <template>
-  <div class="content flex-1 flex flex-col justify-center items-center">
-    <ConfettiExplosion v-if="visible" />
+  <div class="content flex-1 flex flex-col justify-center items-center text-white">
+    <div class="h-1/4 flex flex-col justify-start items-center">
+      <ConfettiExplosion v-if="visible" />
   
-    <div id="result">
-      {{ $filters.resultFilter(result) }}
-    </div>
+      <div id="result">
+        {{ $filters.resultFilter(result) }}
+      </div>
 
-    <Text
-      v-if="result.drawn"
-      :text="`Não esquece a limpeza da igreja amanhã, hein ${result.name}?! 😉`"
-      class="my-3 animate__animated animate__zoomIn"
-      weight="semibold"
-      size="xxl"
-    />
+      <Text
+        v-if="result.drawn"
+        :text="`Não esquece a limpeza da igreja amanhã, hein ${result.name}?! 😉`"
+        class="my-3 animate__animated animate__zoomIn"
+        weight="semibold"
+        size="xxl"
+      />
+    </div>
   </div>
 </template>
 
