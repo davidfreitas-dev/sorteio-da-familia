@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
       v-if="isOver"
       text="Todos os nomes foram sorteados!"
       size="xxl"
-      class="text-danger mb-10 uppercase animate__animated animate__pulse animate__infinite" 
+      class="text-danger mb-16 uppercase animate__animated animate__pulse animate__infinite" 
     />
   </div>
 </template>
