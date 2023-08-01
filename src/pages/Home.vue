@@ -27,25 +27,9 @@ const shuffleArray = async (array) => {
   return array;
 };
 
-const result = ref(undefined);
-
-const resultRef = ref(undefined);
-
-const confirmResult = () => {
-  if (!result.value) return;
-
-  const docRef = doc(db, 'families', result.value.id);
-
-  updateDoc(docRef, {
-    drawn: true
-  });
-
-  resultRef.value?.explode();
-};
-
-const progress = ref(100);
-
 const isDrawing = ref(false);
+const result = ref(undefined);
+const progress = ref(100);
 
 const startDrawing = async () => {
   if (isOver.value) return;
@@ -78,6 +62,20 @@ const startDrawing = async () => {
 
     clearInterval(interval);
   }, 100);
+};
+
+const resultRef = ref(undefined);
+
+const confirmResult = () => {
+  if (!result.value) return;
+
+  const docRef = doc(db, 'families', result.value.id);
+
+  updateDoc(docRef, {
+    drawn: true
+  });
+
+  resultRef.value?.explode();
 };
 
 const resetDrawing = () => {
