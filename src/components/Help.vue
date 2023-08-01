@@ -30,7 +30,7 @@ const solutions = [
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
       >
-        <PopoverPanel class="absolute right-5 -top-96 z-10 mt-3 w-screen max-w-md transform px-4 sm:px-0 lg:max-w-3xl">
+        <PopoverPanel class="absolute right-5 -top-96 z-10 mt-3 w-screen max-w-sm transform px-4 sm:px-0 lg:max-w-3xl">
           <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="bg-gray-800 p-6">
               <span class="block text-2xl text-gray-400">
@@ -38,7 +38,7 @@ const solutions = [
               </span>
             </div>
 
-            <div class="relative grid gap-8 bg-gray-800 p-7 lg:grid-cols-2">
+            <div class="relative grid gap-8 bg-gray-800 p-7">
               <div
                 v-for="(item, index) in solutions"
                 :key="index"
