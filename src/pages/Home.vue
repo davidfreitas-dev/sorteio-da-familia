@@ -1,30 +1,12 @@
 <script setup>
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, onBeforeUnmount, computed, ref } from 'vue';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Progressbar from '@/components/Progressbar.vue';
 import Result from '@/components/Result.vue';
-import Button from '@/components/Button.vue';
 import Text from '@/components/Text.vue';
 
 const names = ref([]);
-
-const loadData = async () => {
-  onSnapshot(collection(db, 'families'), (querySnapshot) => {
-    querySnapshot.forEach(doc => {
-      const document = {
-        ...{ id: doc.id },
-        ...doc.data()
-      };
-
-      names.value.push(document);
-    });
-  });
-};
-
-onMounted(async () => {
-  await loadData();
-});
 
 const isOver = computed(() => {
   return names.value.every(name => name.drawn);
@@ -46,9 +28,12 @@ const shuffleArray = async (array) => {
 };
 
 const result = ref(undefined);
+
 const resultRef = ref(undefined);
 
 const confirmResult = () => {
+  if (!result.value) return;
+
   const resultId = result.value.id;
 
   names.value.map(name => {
@@ -65,9 +50,12 @@ const confirmResult = () => {
 };
 
 const progress = ref(100);
+
 const isDrawing = ref(false);
 
 const startDrawing = async () => {
+  if (isOver.value) return;
+
   progress.value = 1;
   isDrawing.value = true;  
 
@@ -106,6 +94,57 @@ const resetDrawing = () => {
   progress.value = 100;
   result.value = undefined;
 };
+
+const loadData = async () => {
+  onSnapshot(collection(db, 'families'), (querySnapshot) => {
+    querySnapshot.forEach(doc => {
+      const document = {
+        ...{ id: doc.id },
+        ...doc.data()
+      };
+
+      names.value.push(document);
+    });
+  });
+};
+
+const handleKeyPress = (event) => {
+  if (event.ctrlKey){
+    switch (event.keyCode) {
+    case 13: // Confirmar Sorteio (CTRL + Enter)
+      confirmResult();
+      break;
+
+    case 32: // Iniciar Sorteio (CTRL + Espaco)
+      startDrawing();
+      break;
+
+    case 82: // Resetar Sorteio (CTRL + R)
+      resetDrawing();
+      break;
+    
+    default:
+      break;
+    }
+  }
+};
+
+const addEventListeners = () => {
+  window.addEventListener('keyup', handleKeyPress);
+};
+
+const removeEventListeners = () => {
+  window.removeEventListener('keyup', handleKeyPress);
+};
+
+onMounted(() => {
+  loadData();
+  addEventListeners();
+});
+
+onBeforeUnmount(() => {
+  removeEventListeners();
+});
 </script>
 
 <template>
@@ -124,36 +163,7 @@ const resetDrawing = () => {
       v-if="isOver"
       text="Todos os nomes foram sorteados!"
       size="xxl"
-      class="text-danger mb-3 uppercase animate__animated animate__pulse animate__infinite" 
+      class="text-danger mb-10 uppercase animate__animated animate__pulse animate__infinite" 
     />
-
-    <div class="actions h-32 flex justify-center items-center gap-5 mb-8">
-      <Button
-        v-if="!isOver"
-        text="Sortear"
-        color="secondary"
-        icon="gift"
-        :disabled="isDrawing"
-        @click="startDrawing"
-      />
-
-      <Button
-        v-if="result && !isOver"
-        text="Confirmar"
-        color="success"
-        icon="confeti"
-        :disabled="isDrawing"
-        @click="confirmResult"
-      />
-
-      <Button
-        v-if="isOver"
-        text="Redefinir"
-        color="primary"
-        icon="reset"
-        :disabled="isDrawing"
-        @click="resetDrawing"
-      />
-    </div>
   </div>
 </template>
