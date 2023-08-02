@@ -1,5 +1,5 @@
 <script setup>
-import { PhGift, PhConfetti, PhArrowClockwise } from '@phosphor-icons/vue';
+import { PhPlus } from '@phosphor-icons/vue';
 
 const props = defineProps({
   isDrawing: {
@@ -29,21 +29,11 @@ const props = defineProps({
       'bg-secondary': color === 'secondary',
       'bg-success': color === 'success',
     }"
-    class="flex justify-center items-center gap-2 hover:opacity-80 disabled:bg-gray-400 text-white text-2xl font-medium uppercase border-none rounded-md cursor-pointer disabled:cursor-not-allowed transition-colors py-6 px-12 min-w-[175px]"
+    class="flex justify-center items-center gap-2 text-white text-base font-medium uppercase border-none rounded transition-all duration-200 ease-in active:scale-95 active:opacity-80 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-400 py-3 px-6"
   >
-    <ph-gift
-      v-if="icon === 'gift'"
-      :size="36"
-    />
-
-    <ph-confetti
-      v-if="icon === 'confeti'"
-      :size="36"
-    />
-
-    <ph-arrow-clockwise
-      v-if="icon === 'reset'"
-      :size="36"
+    <ph-plus
+      v-if="icon === 'plus'"
+      :size="20"
     />
 
     {{ text }}
