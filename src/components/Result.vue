@@ -28,7 +28,10 @@ defineExpose({explode});
     <div class="h-1/4 flex flex-col justify-start items-center">
       <ConfettiExplosion v-if="visible" />
   
-      <div id="result">
+      <div
+        id="result"
+        class="text-5xl md:text-7xl lg:text-9xl"
+      >
         {{ $filters.resultFilter(result) }}
       </div>
     </div>
@@ -38,7 +41,6 @@ defineExpose({explode});
 <style scoped>
 #result {
   font-family: 'Lilita One', cursive;
-  font-size: 8rem/* 60px */;
   line-height: 1;
 }
 </style>

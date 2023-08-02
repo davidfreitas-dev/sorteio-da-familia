@@ -62,7 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-4/5 mx-auto my-5 p-4">
+  <div class="w-4/5 md:w-3/5 lg:w-2/5 mx-auto my-5 p-4">
     <div class="flex justify-start items-center gap-4">
       <ph-arrow-left
         :size="32"
