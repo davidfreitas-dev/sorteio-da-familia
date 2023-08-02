@@ -99,21 +99,21 @@ const resetDrawing = () => {
 };
 
 const handleKeyPress = (event) => {
-  if (event.ctrlKey){
+  if (event.altKey){
     switch (event.keyCode) {
-    case 13: // Confirmar Sorteio (CTRL + Enter)
+    case 13: // Confirmar Sorteio (Alt + Enter)
       confirmResult();
       break;
 
-    case 32: // Iniciar Sorteio (CTRL + Espaco)
+    case 32: // Iniciar Sorteio (Alt + Espaco)
       startDrawing();
       break;
 
-    case 82: // Resetar Sorteio (CTRL + R)
+    case 82: // Resetar Sorteio (Alt + R)
       resetDrawing();
       break;
 
-    case 78: // Cadatro de Famílias (CTRL + N)
+    case 78: // Cadatro de Famílias (Alt + N)
       router.push('/families');
       break;
     

@@ -3,10 +3,10 @@ import { PhQuestion } from '@phosphor-icons/vue';
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 
 const solutions = [
-  { command: 'CTRL + Espaço', description: 'Iniciar sorteio' },
-  { command: 'CTRL + Enter', description: 'Confirmar resultado' },
-  { command: 'CTRL + R', description: 'Resetar sorteio' },
-  { command: 'CTRL + N', description: 'Cadastro de famílias' }
+  { command: 'Alt + Espaço', description: 'Iniciar sorteio' },
+  { command: 'Alt + Enter', description: 'Confirmar resultado' },
+  { command: 'Alt + R', description: 'Resetar sorteio' },
+  { command: 'Alt + N', description: 'Cadastro de famílias' }
 ];
 </script>
 
