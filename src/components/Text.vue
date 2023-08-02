@@ -24,7 +24,7 @@ const props = defineProps({
       'font-bold': weight === 'bold',
       'font-semibold': weight === 'semibold',
     }"
-    class="text-center font-sans w-3/4 leading-tight"
+    class="text-gray-100 text-center font-sans w-3/4 leading-tight"
   >
     {{ text }}
   </span>

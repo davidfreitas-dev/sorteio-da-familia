@@ -7,6 +7,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../pages/Home.vue')
+    },
+    {
+      path: '/form',
+      name: 'Form',
+      component: () => import('../pages/Form.vue')
     }
   ]
 });
