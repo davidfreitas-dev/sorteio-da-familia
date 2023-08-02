@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <h2 class="text-lg font-semibold text-gray-900 dark:text-white mt-5">
-    Listagem de famílias:
+    Famílias:
   </h2>
 
   <ul 

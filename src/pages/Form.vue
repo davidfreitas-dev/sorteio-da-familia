@@ -8,10 +8,10 @@ import Button from '@/components/Button.vue';
 import List from '@/components/List.vue';
 
 const family = ref('');
-const familyNames = ref([]);
+const familiesNames = ref([]);
 
-const checkExists = async (family) => {
-  return familyNames.value.includes(family.name);
+const checkExists = async (familyName) => {
+  return familiesNames.value.filter(family => family.name === familyName).length;
 };
 
 const handleAdd = async () => {
@@ -44,7 +44,7 @@ const loadData = () => {
       families.push(family);
     });
 
-    familyNames.value = families;
+    familiesNames.value = families;
   });
 };
 
@@ -64,6 +64,7 @@ onMounted(() => {
     <div class="flex justify-start-items-center gap-3 my-4">
       <TextInput
         v-model="family"
+        @on-keyup-enter="handleAdd"
         placeholder="Nome da família"
         type="text"
       />
@@ -76,6 +77,6 @@ onMounted(() => {
       />
     </div>
 
-    <List :list="familyNames" />
+    <List :list="familiesNames" />
   </div>
 </template>
