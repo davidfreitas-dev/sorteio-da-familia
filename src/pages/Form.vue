@@ -1,10 +1,21 @@
 <script setup>
 import { ref } from 'vue';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/services/firebase-firestore';
 import Text from '@/components/Text.vue';
 import TextInput from '@/components/TextInput.vue';
 import Button from '@/components/Button.vue';
 
 const familyName = ref('');
+
+const handleAdd = async () => {
+  const docRef = await addDoc(collection(db, 'families'), {
+    name: familyName.value,
+    drawn: false
+  });
+
+  console.log('Document written with ID: ', docRef.id);
+};
 </script>
 
 <template>
@@ -26,6 +37,7 @@ const familyName = ref('');
         text="Adicionar"
         color="success"
         icon="plus"
+        @click="handleAdd"
       />
     </div>
   </div>
