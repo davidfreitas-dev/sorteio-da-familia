@@ -1,5 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { PhArrowLeft } from '@phosphor-icons/vue';
 import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Text from '@/components/Text.vue';
@@ -8,6 +10,7 @@ import Button from '@/components/Button.vue';
 import Loader from '@/components/Loader.vue';
 import List from '@/components/List.vue';
 
+const router = useRouter();
 const family = ref('');
 const familiesNames = ref([]);
 
@@ -60,11 +63,19 @@ onMounted(() => {
 
 <template>
   <div class="w-4/5 mx-auto my-5 p-4">
-    <Text 
-      text="Sorteio da Família"
-      weight="bold"
-      size="xl"
-    />
+    <div class="flex justify-start items-center gap-4">
+      <ph-arrow-left
+        :size="32"
+        class="text-success cursor-pointer"
+        @click="router.push('/')"
+      />
+      
+      <Text 
+        text="Cadastro de Famílias"
+        weight="bold"
+        size="xl"
+      />
+    </div>
 
     <div class="flex justify-start-items-center gap-3 my-4">
       <TextInput

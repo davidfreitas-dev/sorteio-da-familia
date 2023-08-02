@@ -9,9 +9,9 @@ const router = createRouter({
       component: () => import('../pages/Home.vue')
     },
     {
-      path: '/form',
-      name: 'Form',
-      component: () => import('../pages/Form.vue')
+      path: '/families',
+      name: 'Families',
+      component: () => import('../pages/Families.vue')
     }
   ]
 });

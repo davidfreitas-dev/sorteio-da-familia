@@ -1,11 +1,15 @@
 <script setup>
 import { onMounted, onBeforeUnmount, computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { PhHeart } from '@phosphor-icons/vue';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Progressbar from '@/components/Progressbar.vue';
 import Result from '@/components/Result.vue';
 import Help from '@/components/Help.vue';
 import Text from '@/components/Text.vue';
+
+const router = useRouter();
 
 const names = ref([]);
 
@@ -108,6 +112,10 @@ const handleKeyPress = (event) => {
     case 82: // Resetar Sorteio (CTRL + R)
       resetDrawing();
       break;
+
+    case 78: // Resetar Sorteio (CTRL + R)
+      router.push('/families');
+      break;
     
     default:
       break;
@@ -169,7 +177,28 @@ onBeforeUnmount(() => {
       v-if="isOver"
       text="Todos os nomes foram sorteados!"
       size="xl"
-      class="text-danger mb-16 uppercase animate__animated animate__pulse animate__infinite" 
+      class="text-danger text-center mb-16 uppercase animate__animated animate__pulse animate__infinite" 
     />
+
+    <div
+      v-else
+      class="flex mb-16 text-gray-400"
+    >
+      Desenvolvido com 
+      <ph-heart
+        :size="24"
+        weight="fill"
+        color="red"
+        class="mx-2"
+      /> 
+      por 
+      <a
+        href="https://davidfreitas.dev.br"
+        target="_blank"
+        class="mx-1 hover:text-success hover:underline"
+      >
+        David Freitas
+      </a>
+    </div>
   </div>
 </template>
