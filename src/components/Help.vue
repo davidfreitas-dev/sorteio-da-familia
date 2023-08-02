@@ -1,6 +1,6 @@
 <script setup>
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 import { PhQuestion } from '@phosphor-icons/vue';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 
 const solutions = [
   { command: 'CTRL + Espaço', description: 'Iniciar sorteio' },

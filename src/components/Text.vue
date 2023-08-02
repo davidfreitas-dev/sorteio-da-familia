@@ -18,11 +18,9 @@ const props = defineProps({
 <template>
   <span
     :class="{
-      'text-sm': size === 'sm',
       'text-md': size === 'md',
-      'text-lg': size === 'lg',
-      'text-xl': size === 'xl',
-      'text-3xl': size === 'xxl',
+      'text-xl': size === 'lg',
+      'text-3xl': size === 'xl',
       'font-bold': weight === 'bold',
       'font-semibold': weight === 'semibold',
     }"

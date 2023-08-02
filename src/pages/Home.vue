@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center h-screen w-full bg-gray-900">
+  <div class="flex flex-col justify-center items-center h-screen w-full">
     <Progressbar
       :progress="progress"
       class="mb-3"
@@ -168,7 +168,7 @@ onBeforeUnmount(() => {
     <Text
       v-if="isOver"
       text="Todos os nomes foram sorteados!"
-      size="xxl"
+      size="xl"
       class="text-danger mb-16 uppercase animate__animated animate__pulse animate__infinite" 
     />
   </div>
