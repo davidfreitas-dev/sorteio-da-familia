@@ -22,12 +22,12 @@ const handleAdd = async () => {
     return;
   }
 
-  const docRef = await addDoc(collection(db, 'families'), {
+  addDoc(collection(db, 'families'), {
     name: family.value,
     drawn: false
   });
 
-  console.log('Document written with ID: ', docRef.id);
+  family.value = '';
 };
 
 const loadData = () => {
