@@ -5,6 +5,7 @@ import { db } from '@/services/firebase-firestore';
 import Text from '@/components/Text.vue';
 import TextInput from '@/components/TextInput.vue';
 import Button from '@/components/Button.vue';
+import Loader from '@/components/Loader.vue';
 import List from '@/components/List.vue';
 
 const family = ref('');
@@ -30,7 +31,9 @@ const handleAdd = async () => {
   family.value = '';
 };
 
-const loadData = () => {
+const isLoading = ref(true);
+
+const loadData = async () => {
   onSnapshot(collection(db, 'families'), (querySnapshot) => {
     const families = [];
 
@@ -45,6 +48,8 @@ const loadData = () => {
     });
 
     familiesNames.value = families;
+
+    isLoading.value = false;
   });
 };
 
@@ -73,10 +78,16 @@ onMounted(() => {
         text="Adicionar"
         color="success"
         icon="plus"
+        :disabled="!family"
         @click="handleAdd"
       />
     </div>
 
-    <List :list="familiesNames" />
+    <Loader v-if="isLoading" />
+
+    <List
+      v-else
+      :list="familiesNames"
+    />
   </div>
 </template>
