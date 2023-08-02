@@ -113,7 +113,7 @@ const handleKeyPress = (event) => {
       resetDrawing();
       break;
 
-    case 78: // Resetar Sorteio (CTRL + R)
+    case 78: // Cadatro de Famílias (CTRL + N)
       router.push('/families');
       break;
     
@@ -182,7 +182,7 @@ onBeforeUnmount(() => {
 
     <div
       v-else
-      class="flex mb-16 text-gray-400"
+      class="flex text-xl text-gray-400 mb-16"
     >
       Desenvolvido com 
       <ph-heart
