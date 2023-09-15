@@ -182,7 +182,7 @@ onBeforeUnmount(() => {
 
     <div
       v-else
-      class="flex text-lg md:text-xl text-gray-400 mb-16"
+      class="flex text-lg md:text-xl lg:text-2xl text-gray-400 mb-16"
     >
       Desenvolvido com 
       <ph-heart

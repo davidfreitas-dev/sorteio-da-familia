@@ -79,10 +79,10 @@ onMounted(() => {
 
     <div class="flex justify-start-items-center gap-3 my-4">
       <TextInput
-        v-model="family"
-        @on-keyup-enter="handleAdd"
-        placeholder="Nome da família"
         type="text"
+        v-model="family"
+        placeholder="Nome da família"
+        @on-keyup-enter="handleAdd"
       />
 
       <Button

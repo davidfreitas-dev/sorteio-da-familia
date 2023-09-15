@@ -24,22 +24,20 @@ defineExpose({explode});
 </script>
 
 <template>
-  <div class="content flex-1 flex flex-col justify-center items-center text-white">
-    <div class="h-1/4 flex flex-col justify-start items-center">
-      <ConfettiExplosion v-if="visible" />
+  <div class="content flex-1 flex flex-col justify-center items-center w-full h-1/4 overflow-hidden text-white">
+    <ConfettiExplosion
+      v-if="visible"
+      :stage-width="1200"
+    />
   
-      <div
-        id="result"
-        class="text-5xl md:text-7xl lg:text-9xl"
-      >
-        {{ $filters.resultFilter(result) }}
-      </div>
+    <div class="result text-4xl md:text-6xl lg:text-8xl">
+      {{ $filters.resultFilter(result) }}
     </div>
   </div>
 </template>
 
 <style scoped>
-#result {
+.result {
   font-family: 'Lilita One', cursive;
   line-height: 1;
 }
