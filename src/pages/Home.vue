@@ -8,6 +8,7 @@ import Progressbar from '@/components/Progressbar.vue';
 import Result from '@/components/Result.vue';
 import Help from '@/components/Help.vue';
 import Text from '@/components/Text.vue';
+import ModalConfirm from '@/components/ModalConfirm.vue';
 
 const router = useRouter();
 
@@ -83,6 +84,12 @@ const confirmResult = () => {
   resultRef.value?.explode();
 };
 
+const modalRef = ref(null);
+
+const handleReset = () => {
+  modalRef.value?.openModal();
+};
+
 const resetDrawing = () => {
   names.value.forEach(name => {
     const docRef = doc(db, 'families', name.id);
@@ -110,7 +117,7 @@ const handleKeyPress = (event) => {
       break;
 
     case 82: // Resetar Sorteio (Ctrl + Alt + R)
-      resetDrawing();
+      handleReset();
       break;
 
     case 78: // Cadatro de Famílias (Ctrl + Alt + N)
@@ -200,5 +207,10 @@ onBeforeUnmount(() => {
         David Freitas
       </a>
     </div>
+
+    <ModalConfirm
+      ref="modalRef"
+      @confirm-action="resetDrawing"
+    />
   </div>
 </template>
