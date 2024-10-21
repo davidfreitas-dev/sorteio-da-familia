@@ -46,6 +46,11 @@ onMounted(() => {
 
 const selectedFamily = ref(null);
 
+const handleEditFamily = (family) => {
+  selectedFamily.value = family;
+  showModal();
+};
+
 const deleteFamily = async () => {
   try {
     const familyDocRef = doc(db, 'families', selectedFamily.value.id);
@@ -93,6 +98,7 @@ const closeModal = () => {
 };
 
 const handleAddFamily = () => {
+  selectedFamily.value = null;
   showModal();
 };
 
@@ -236,9 +242,11 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
     <Modal
       ref="modalRef"
       title="Famílias"
-      @on-modal-close="loadData"
     >
-      <FamiliesForm @on-close-modal="closeModal" />
+      <FamiliesForm
+        :family="selectedFamily"
+        @on-close-modal="closeModal"
+      />
     </Modal>
   </div>
 </template>
