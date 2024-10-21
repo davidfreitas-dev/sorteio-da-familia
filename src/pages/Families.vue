@@ -241,7 +241,7 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
 
     <Modal
       ref="modalRef"
-      title="Famílias"
+      title="Nome da Família"
     >
       <FamiliesForm
         :family="selectedFamily"

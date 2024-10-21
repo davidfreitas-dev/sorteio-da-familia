@@ -67,7 +67,7 @@ const handleSave = async (event) => {
     <InputText
       type="text"
       v-model="family.name"
-      placeholder="Nome da família"
+      placeholder="Fulano (e Fulana)"
       @on-keyup-enter="handleSave"
     />
 
