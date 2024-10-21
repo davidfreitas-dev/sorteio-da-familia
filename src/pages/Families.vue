@@ -125,7 +125,7 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
       <div class="flex justify-between items-center w-full my-5">
         <Search
           v-model="search"
-          placeholder="Buscar Família"
+          placeholder="Buscar família"
         />
 
         <Button @click="handleAddFamily">
@@ -139,7 +139,7 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
 
       <div
         v-if="isLoading || (!isLoading && !families.length)"
-        class="flex justify-center items-center w-full text-secondary my-10"
+        class="flex justify-center items-center w-full text-white my-10"
       >
         <Loader
           v-if="isLoading"
@@ -172,11 +172,11 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
             <tr
               v-for="(item, i) in families"
               :key="i"
-              class="border-b border-gray-700 hover:bg-gray-700"
+              class="border-b border-gray-700 hover:bg-gray-700 hover:text-white"
             >
               <th
                 scope="row"
-                class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap"
+                class="w-[10%] px-6 py-4 font-medium text-gray-500 whitespace-nowrap"
               >
                 #{{ i + 1 }}
               </th>
@@ -209,7 +209,7 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
                 </div>
               </td>
 
-              <td class="px-6 py-4">
+              <td class="w-[20%] px-6 py-4">
                 <div class="flex gap-3">
                   <Button
                     size="small"
