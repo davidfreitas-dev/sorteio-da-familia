@@ -210,6 +210,8 @@ onBeforeUnmount(() => {
 
     <Dialog
       ref="dialogRef"
+      header="Deseja realmente zerar o sorteio?"
+      message="Ao clicar em confirmar todos os nomes estarão disponíveis para o sorteio novamente."
       @confirm-action="resetDrawing"
     />
   </div>

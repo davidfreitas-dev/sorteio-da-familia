@@ -2,19 +2,21 @@
 import { onMounted, ref, reactive, watch } from 'vue';
 import { debounce } from 'vue-debounce';
 import { useRouter } from 'vue-router';
-import { PhPlus, PhArrowLeft } from '@phosphor-icons/vue';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { PhPlus, PhTrash, PhNotePencil, PhArrowLeft } from '@phosphor-icons/vue';
+import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
 import Wrapper from '@/components/shared/Wrapper.vue';
 import Text from '@/components/shared/Text.vue';
 import Search from '@/components/shared/Search.vue';
 import Button from '@/components/shared/Button.vue';
 import Loader from '@/components/shared/Loader.vue';
+import Dialog from '@/components/shared/Dialog.vue';
 import Modal from '@/components/shared/Modal.vue';
 import FamiliesForm from '@/components/forms/FamiliesForm.vue';
 
 const router = useRouter();
 const isLoading = ref(true);
+const dialogRef = ref(null);
 const allFamilies = ref([]);
 const families = ref([]);
 
@@ -41,6 +43,23 @@ const loadData = async () => {
 onMounted(() => {
   loadData();
 });
+
+const selectedFamily = ref(null);
+
+const deleteFamily = async () => {
+  try {
+    const familyDocRef = doc(db, 'families', selectedFamily.value.id);
+    await deleteDoc(familyDocRef);
+    console.log('Família excluída com sucesso');
+  } catch (error) {
+    console.error('Erro ao excluir família:', error);
+  }
+};
+
+const handleDeleteFamily = async (family) => {
+  selectedFamily.value = family;
+  dialogRef.value?.openModal();
+};
 
 const search = ref('');
 
@@ -185,13 +204,34 @@ const tableHead = reactive(['#', 'Nome', 'Ações']);
               </td>
 
               <td class="px-6 py-4">
-                Ações
+                <div class="flex gap-3">
+                  <Button
+                    size="small"
+                    @click="handleEditFamily(item)"
+                  >
+                    <ph-note-pencil :size="20" />
+                  </Button>
+                  <Button
+                    size="small"
+                    color="danger"
+                    @click="handleDeleteFamily(item)"
+                  >
+                    <ph-trash :size="20" />
+                  </Button>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </Wrapper>
+
+    <Dialog
+      ref="dialogRef"
+      header="Deseja realmente excluir esta família?"
+      message="Ao clicar em confirmar as informações serão excluidas permanentemente."
+      @confirm-action="deleteFamily"
+    />
 
     <Modal
       ref="modalRef"

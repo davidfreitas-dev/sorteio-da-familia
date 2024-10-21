@@ -41,11 +41,11 @@
                 as="h3"
                 class="text-lg font-medium leading-6 text-gray-300"
               >
-                Deseja realmente zerar o sorteio?
+                {{ header }}
               </DialogTitle>
               <div class="mt-2">
                 <p class="text-sm text-gray-500">
-                  Ao clicar em confirmar todos os nomes estarão disponíveis para o sorteio novamente.
+                  {{ message }}
                 </p>
               </div>
 
@@ -84,6 +84,17 @@ import {
 } from '@headlessui/vue';
 
 const emit = defineEmits(['confirmAction']);
+
+const props = defineProps({
+  header: { 
+    type: String, 
+    default: '' 
+  },
+  message: { 
+    type: String, 
+    default: '' 
+  },
+});
 
 const handleConfirm = () => {
   emit('confirmAction');
