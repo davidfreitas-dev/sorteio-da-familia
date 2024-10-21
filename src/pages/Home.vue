@@ -4,11 +4,11 @@ import { useRouter } from 'vue-router';
 import { PhHeart } from '@phosphor-icons/vue';
 import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
-import Progressbar from '@/components/Progressbar.vue';
-import Result from '@/components/Result.vue';
+import Progressbar from '@/components/shared/Progressbar.vue';
+import Dialog from '@/components/shared/Dialog.vue';
+import Text from '@/components/shared/Text.vue';
 import Help from '@/components/Help.vue';
-import Text from '@/components/Text.vue';
-import ModalConfirm from '@/components/ModalConfirm.vue';
+import Result from '@/components/Result.vue';
 
 const router = useRouter();
 
@@ -84,10 +84,10 @@ const confirmResult = () => {
   resultRef.value?.explode();
 };
 
-const modalRef = ref(null);
+const dialogRef = ref(null);
 
 const handleReset = () => {
-  modalRef.value?.openModal();
+  dialogRef.value?.openModal();
 };
 
 const resetDrawing = () => {
@@ -208,8 +208,8 @@ onBeforeUnmount(() => {
       </a>
     </div>
 
-    <ModalConfirm
-      ref="modalRef"
+    <Dialog
+      ref="dialogRef"
       @confirm-action="resetDrawing"
     />
   </div>

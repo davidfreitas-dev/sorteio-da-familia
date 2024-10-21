@@ -18,6 +18,9 @@ module.exports = {
     colors: {
       ...colors,
       primary: '#2E3191',
+      'success-hover': '#6ec496',
+      'success-pressed': '#43a370',
+      'success-accent': '#edf8f2',
       secondary: '#41BBC7',
       success: '#04DB90',
       alert: '#FFC700',
