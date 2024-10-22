@@ -2,8 +2,9 @@
 import { onMounted, ref, reactive } from 'vue';
 import { collection, onSnapshot, doc, addDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
-import InputText from '@/components/shared/InputText.vue';
+import Input from '@/components/shared/Input.vue';
 import Button from '@/components/shared/Button.vue';
+import Switch from '@/components/shared/Switch.vue';
 
 const emit = defineEmits(['onCloseModal']);
 
@@ -64,19 +65,24 @@ const handleSave = async (event) => {
 
 <template>
   <form>
-    <InputText
+    <Input
       type="text"
       v-model="family.name"
       placeholder="Fulano (e Fulana)"
       @on-keyup-enter="handleSave"
     />
 
+    <div class="flex gap-2 text-white my-5">
+      <span>Sorteado</span>
+      <Switch v-model="family.drawn" />
+    </div>
+
     <Button
       class="mt-5"
       :disabled="!family.name"
       @click="handleSave"
     >
-      Salvar Dados
+      Salvar
     </Button>
   </form>
 </template>
