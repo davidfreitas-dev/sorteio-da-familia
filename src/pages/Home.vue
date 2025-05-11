@@ -2,8 +2,9 @@
 import { onMounted, onBeforeUnmount, computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
-import { PhHeart } from '@phosphor-icons/vue';
+import { useLoading } from '@/composables/useLoading';
 import { useFamilyStore } from '@/stores/familyStore';
+import { PhHeart } from '@phosphor-icons/vue';
 
 import Progressbar from '@/components/shared/Progressbar.vue';
 import Dialog from '@/components/shared/Dialog.vue';
@@ -98,8 +99,16 @@ const removeEventListeners = () => {
   window.removeEventListener('keyup', handleKeyPress);
 };
 
-onMounted(() => {
-  familyStore.fetchFamiliesNotDrawn();
+const { withLoading } = useLoading();
+
+const loadData = async () => {
+  await withLoading(async () => {
+    await familyStore.fetchFamiliesNotDrawn();
+  });
+};
+
+onMounted(async () => {
+  loadData();
   addEventListeners();
 });
 

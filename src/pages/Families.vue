@@ -2,6 +2,7 @@
 import { onMounted, ref, reactive, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { debounce } from 'vue-debounce';
+import { useLoading } from '@/composables/useLoading';
 import { useFamilyStore } from '@/stores/familyStore';
 import { PhPlus, PhTrash, PhNotePencil, PhArrowLeft } from '@phosphor-icons/vue';
 
@@ -16,21 +17,16 @@ import FamiliesForm from '@/components/forms/FamiliesForm.vue';
 
 const router = useRouter();
 const familyStore = useFamilyStore();
+const search = ref('');
+const selectedFamily = ref(null);
 const tableHead = reactive(['#', 'Nome', 'Ações']);
 
-const search = ref('');
-const isLoading = ref(true);
-const selectedFamily = ref(null);
+const { isLoading, withLoading } = useLoading();
 
 const loadData = async () => {
-  isLoading.value = true;
-  try {
+  await withLoading(async () => {
     await familyStore.fetchFamilies();
-  } catch (error) {
-    console.log(error);
-  } finally {
-    isLoading.value = false;
-  }
+  });
 };
 
 onMounted(() => {
