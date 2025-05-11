@@ -19,30 +19,31 @@ import { db } from '@/services/firebase-firestore';
 export const useFamilyStore = defineStore('familyStore', () => {
   const families = ref([]);
   const familiesNotDrawn = ref([]);
-  const unsubscribe = ref(null);
+  const unsubscribeFamilies = ref(null);
+  const unsubscribeFamiliesNotDrawn = ref(null);
 
   const fetchFamilies = async () => {
-    if (unsubscribe.value) {
-      unsubscribe.value(); // Encerra escuta anterior
+    if (unsubscribeFamilies.value) {
+      unsubscribeFamilies.value(); // Encerra escuta anterior
     }
 
     const q = query(collection(db, 'families'), orderBy('name'));
 
-    unsubscribe.value = onSnapshot(q, (snapshot) => {
+    unsubscribeFamilies.value = onSnapshot(q, (snapshot) => {
       families.value = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
       }));
 
-      console.log('Families: ', families.value);
+      console.log('Famílias: ', families.value);
     }, (error) => {
       console.error('Erro ao escutar famílias:', error);
     });
   };
 
   const fetchFamiliesNotDrawn = async () => {
-    if (unsubscribe.value) {
-      unsubscribe.value(); // Encerra escuta anterior
+    if (unsubscribeFamiliesNotDrawn.value) {
+      unsubscribeFamiliesNotDrawn.value(); // Encerra escuta anterior
     }
 
     const q = query(
@@ -51,11 +52,13 @@ export const useFamilyStore = defineStore('familyStore', () => {
       orderBy('name')
     );
 
-    unsubscribe.value = onSnapshot(q, (snapshot) => {
+    unsubscribeFamiliesNotDrawn.value = onSnapshot(q, (snapshot) => {
       familiesNotDrawn.value = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
       }));
+
+      console.log('Famílias não sorteadas: ', familiesNotDrawn.value);
     }, (error) => {
       console.error('Erro ao escutar famílias não sorteadas:', error);
     });
@@ -100,8 +103,10 @@ export const useFamilyStore = defineStore('familyStore', () => {
   };
 
   const stopListeningFamilies = () => {
-    unsubscribe.value?.();
-    unsubscribe.value = null;
+    unsubscribeFamilies.value?.();
+    unsubscribeFamiliesNotDrawn.value?.();
+    unsubscribeFamilies.value = null;
+    unsubscribeFamiliesNotDrawn.value = null;
   };
 
   const resetFamilies = () => {
@@ -110,6 +115,7 @@ export const useFamilyStore = defineStore('familyStore', () => {
 
   return {
     families,
+    familiesNotDrawn,
     fetchFamilies,
     fetchFamiliesNotDrawn,
     addFamily,

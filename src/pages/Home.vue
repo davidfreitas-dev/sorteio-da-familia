@@ -1,24 +1,25 @@
 <script setup>
 import { onMounted, onBeforeUnmount, computed, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { PhHeart } from '@phosphor-icons/vue';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '@/services/firebase-firestore';
 import { useFamilyStore } from '@/stores/familyStore';
+
 import Progressbar from '@/components/shared/Progressbar.vue';
 import Dialog from '@/components/shared/Dialog.vue';
 import Text from '@/components/shared/Text.vue';
 import Help from '@/components/Help.vue';
 import Result from '@/components/Result.vue';
 
-const router = useRouter();
-
 const familyStore = useFamilyStore();
 
-const names = ref([]);
+const { familiesNotDrawn } = storeToRefs(familyStore);
 
+const isDrawing = ref(false);
+const progress = ref(0);
+const result = ref(undefined);
 const isOver = computed(() => {
-  return names.value.every(name => name.drawn);
+  return familiesNotDrawn.value.length === 0;
 });
 
 const shuffleArray = async (array) => {
@@ -36,32 +37,29 @@ const shuffleArray = async (array) => {
   return array;
 };
 
-const isDrawing = ref(false);
-const result = ref(undefined);
-const progress = ref(0);
-
 const startDrawing = async () => {
   if (isOver.value) return;
 
-  isDrawing.value = true;  
+  progress.value = 0;  
+  
+  isDrawing.value = true;
 
-  const filteredNames = names.value.filter(name => name.drawn === false);  
-  const shuffledNames = await shuffleArray(filteredNames);
+  const shuffledFamilies = await shuffleArray([...familiesNotDrawn.value]);
   const startTime = new Date().getTime();
 
   const interval = setInterval(() => {
     const currentTime = new Date().getTime();
     const elapsed = currentTime - startTime;
-    const duration = shuffledNames.length === 1 ? 100 : 10000;
+    const duration = shuffledFamilies.length === 1 ? 100 : 10000;
 
     if (elapsed < duration) {
-      const randomIndex = Math.floor(Math.random() * shuffledNames.length);
-      result.value = shuffledNames[randomIndex];
+      const randomIndex = Math.floor(Math.random() * shuffledFamilies.length);
+      result.value = shuffledFamilies[randomIndex];
       progress.value++;
       return;
     } 
     
-    const remainingNames = shuffledNames.filter(name => name.drawn === false);
+    const remainingNames = shuffledFamilies.filter(name => name.drawn === false);
     const lastRandomIndex = Math.floor(Math.random() * remainingNames.length);
       
     result.value = remainingNames[lastRandomIndex];
@@ -92,6 +90,25 @@ const resetDrawing = async () => {
   result.value = undefined;
 };
 
+const addEventListeners = () => {
+  window.addEventListener('keyup', handleKeyPress);
+};
+
+const removeEventListeners = () => {
+  window.removeEventListener('keyup', handleKeyPress);
+};
+
+onMounted(() => {
+  familyStore.fetchFamiliesNotDrawn();
+  addEventListeners();
+});
+
+onBeforeUnmount(() => {
+  removeEventListeners();
+});
+
+const router = useRouter();
+
 const handleKeyPress = (event) => {
   if (event.ctrlKey && event.altKey){
     switch (event.keyCode) {
@@ -116,41 +133,6 @@ const handleKeyPress = (event) => {
     }
   }
 };
-
-const addEventListeners = () => {
-  window.addEventListener('keyup', handleKeyPress);
-};
-
-const removeEventListeners = () => {
-  window.removeEventListener('keyup', handleKeyPress);
-};
-
-const loadData = () => {
-  onSnapshot(collection(db, 'families'), (querySnapshot) => {
-    const families = [];
-
-    querySnapshot.forEach(doc => {
-      const family = {
-        id: doc.id,
-        name: doc.data().name,
-        drawn: doc.data().drawn
-      };
-
-      families.push(family);
-    });
-
-    names.value = families;
-  });
-};
-
-onMounted(() => {
-  loadData();
-  addEventListeners();
-});
-
-onBeforeUnmount(() => {
-  removeEventListeners();
-});
 </script>
 
 <template>
