@@ -2,8 +2,9 @@
 import { onMounted, onBeforeUnmount, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { PhHeart } from '@phosphor-icons/vue';
-import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/services/firebase-firestore';
+import { useFamilyStore } from '@/stores/familyStore';
 import Progressbar from '@/components/shared/Progressbar.vue';
 import Dialog from '@/components/shared/Dialog.vue';
 import Text from '@/components/shared/Text.vue';
@@ -11,6 +12,8 @@ import Help from '@/components/Help.vue';
 import Result from '@/components/Result.vue';
 
 const router = useRouter();
+
+const familyStore = useFamilyStore();
 
 const names = ref([]);
 
@@ -35,12 +38,11 @@ const shuffleArray = async (array) => {
 
 const isDrawing = ref(false);
 const result = ref(undefined);
-const progress = ref(100);
+const progress = ref(0);
 
 const startDrawing = async () => {
   if (isOver.value) return;
 
-  progress.value = 1;
   isDrawing.value = true;  
 
   const filteredNames = names.value.filter(name => name.drawn === false);  
@@ -72,15 +74,9 @@ const startDrawing = async () => {
 
 const resultRef = ref(undefined);
 
-const confirmResult = () => {
+const confirmResult = async () => {
   if (!result.value) return;
-
-  const docRef = doc(db, 'families', result.value.id);
-
-  updateDoc(docRef, {
-    drawn: true
-  });
-
+  await familyStore.updateFamily(result.value.id, { drawn: true });
   resultRef.value?.explode();
 };
 
@@ -90,17 +86,8 @@ const handleReset = () => {
   dialogRef.value?.openModal();
 };
 
-const resetDrawing = () => {
-  names.value.forEach(name => {
-    const docRef = doc(db, 'families', name.id);
-
-    updateDoc(docRef, {
-      drawn: false
-    });
-    
-    name.drawn = false;
-  });
-  
+const resetDrawing = async () => {
+  await familyStore.resetFamiliesDrawnStatus();
   progress.value = 100;
   result.value = undefined;
 };
