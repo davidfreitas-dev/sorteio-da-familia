@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref, reactive, watch } from 'vue';
-import { debounce } from 'vue-debounce';
+import { onMounted, ref, reactive, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { debounce } from 'vue-debounce';
+import { useFamilyStore } from '@/stores/familyStore';
 import { PhPlus, PhTrash, PhNotePencil, PhArrowLeft } from '@phosphor-icons/vue';
-import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '@/services/firebase-firestore';
+
 import Wrapper from '@/components/shared/Wrapper.vue';
 import Text from '@/components/shared/Text.vue';
 import Search from '@/components/shared/Search.vue';
@@ -15,94 +15,77 @@ import Modal from '@/components/shared/Modal.vue';
 import FamiliesForm from '@/components/forms/FamiliesForm.vue';
 
 const router = useRouter();
+const familyStore = useFamilyStore();
+const tableHead = reactive(['#', 'Nome', 'Ações']);
+
+const search = ref('');
 const isLoading = ref(true);
-const dialogRef = ref(null);
-const allFamilies = ref([]);
-const families = ref([]);
+const selectedFamily = ref(null);
 
 const loadData = async () => {
-  onSnapshot(collection(db, 'families'), (querySnapshot) => {
-    const array = [];
-
-    querySnapshot.forEach(doc => {
-      const family = {
-        id: doc.id,
-        name: doc.data().name,
-        drawn: doc.data().drawn
-      };
-
-      array.push(family);
-    });
-
-    allFamilies.value = array;
-    families.value = array;
+  isLoading.value = true;
+  try {
+    await familyStore.fetchFamilies();
+  } catch (error) {
+    console.log(error);
+  } finally {
     isLoading.value = false;
-  });
+  }
 };
 
 onMounted(() => {
   loadData();
 });
 
-const selectedFamily = ref(null);
+const families = computed(() => {
+  if (!search.value.trim()) return familyStore.families;
+
+  const lowerSearch = search.value.toLowerCase();
+
+  return familyStore.families.filter(family =>
+    family.name.toLowerCase().includes(lowerSearch)
+  );
+});
+
+const handleDebounce = debounce((searchValue) => {
+  search.value = searchValue;
+}, '500ms');
+
+watch(search, (newValue) => {
+  handleDebounce(newValue);
+});
+
+const modalRef = ref(null);
+
+const handleAddFamily = () => {
+  selectedFamily.value = null;
+  modalRef.value?.setOpen();
+};
 
 const handleEditFamily = (family) => {
   selectedFamily.value = family;
-  showModal();
+  modalRef.value?.setOpen();
+};
+
+const dialogRef = ref(null);
+
+const handleDeleteFamily = (family) => {
+  selectedFamily.value = family;
+  dialogRef.value?.openModal();
 };
 
 const deleteFamily = async () => {
   try {
-    const familyDocRef = doc(db, 'families', selectedFamily.value.id);
-    await deleteDoc(familyDocRef);
+    await familyStore.deleteFamily(selectedFamily.value.id);
     console.log('Família excluída com sucesso');
   } catch (error) {
     console.error('Erro ao excluir família:', error);
   }
 };
 
-const handleDeleteFamily = async (family) => {
-  selectedFamily.value = family;
-  dialogRef.value?.openModal();
-};
-
-const search = ref('');
-
-const filterFamilies = (searchValue) => {
-  if (searchValue.trim() === '') {
-    families.value = allFamilies.value;
-  } else {
-    const lowerSearch = searchValue.toLowerCase();
-    families.value = allFamilies.value.filter(family => 
-      family.name.toLowerCase().includes(lowerSearch)
-    );
-  }
-};
-
-const handleDebounce = debounce((search) => {
-  filterFamilies(search);
-}, '500ms');
-
-watch(search, (newSearch) => {
-  handleDebounce(newSearch);
-});
-
-const modalRef = ref(null);
-
-const showModal = () => {
-  modalRef.value?.setOpen();
-};
-
 const closeModal = () => {
   modalRef.value?.closeModal();
 };
-
-const handleAddFamily = () => {
-  selectedFamily.value = null;
-  showModal();
-};
-
-const tableHead = reactive(['#', 'Nome', 'Ações']);
 </script>
 
 <template>

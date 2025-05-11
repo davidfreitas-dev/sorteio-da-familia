@@ -29,15 +29,17 @@ export const useFamilyStore = defineStore('familyStore', () => {
 
     const q = query(collection(db, 'families'), orderBy('name'));
 
-    unsubscribeFamilies.value = onSnapshot(q, (snapshot) => {
-      families.value = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      }));
+    return new Promise((resolve, reject) => {
+      unsubscribeFamilies.value = onSnapshot(q, (snapshot) => {
+        families.value = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
 
-      console.log('Famílias: ', families.value);
-    }, (error) => {
-      console.error('Erro ao escutar famílias:', error);
+        resolve();
+      }, (error) => {
+        reject(error);
+      });
     });
   };
 
@@ -52,15 +54,17 @@ export const useFamilyStore = defineStore('familyStore', () => {
       orderBy('name')
     );
 
-    unsubscribeFamiliesNotDrawn.value = onSnapshot(q, (snapshot) => {
-      familiesNotDrawn.value = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      console.log('Famílias não sorteadas: ', familiesNotDrawn.value);
-    }, (error) => {
-      console.error('Erro ao escutar famílias não sorteadas:', error);
+    return new Promise((resolve, reject) => {
+      unsubscribeFamiliesNotDrawn.value = onSnapshot(q, (snapshot) => {
+        familiesNotDrawn.value = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+      
+        resolve();
+      }, (error) => {
+        reject(error);
+      });
     });
   };
 
