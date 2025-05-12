@@ -10,6 +10,7 @@ import Wrapper from '@/components/shared/Wrapper.vue';
 import Text from '@/components/shared/Text.vue';
 import Search from '@/components/shared/Search.vue';
 import Button from '@/components/shared/Button.vue';
+import Badge from '@/components/shared/Badge.vue';
 import Loader from '@/components/shared/Loader.vue';
 import Dialog from '@/components/shared/Dialog.vue';
 import Modal from '@/components/shared/Modal.vue';
@@ -19,7 +20,7 @@ const router = useRouter();
 const familyStore = useFamilyStore();
 const search = ref('');
 const selectedFamily = ref(null);
-const tableHead = reactive(['#', 'Nome', 'Ações']);
+const tableHead = reactive(['#', 'Nome', 'Status', 'Atualizado em', 'Ações']);
 
 const { isLoading, withLoading } = useLoading();
 
@@ -85,40 +86,34 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div class="w-5/6 md:w-5/6 lg:w-4/6 mx-auto my-5 p-4">
-    <div class="flex justify-start items-center gap-4">
-      <ph-arrow-left
-        :size="32"
-        class="text-success cursor-pointer"
-        @click="router.push('/')"
-      />
-      
+  <div class="w-[90%] xl:w-5/6 mx-auto my-5 p-4">
+    <div class="flex justify-between items-center gap-4">
       <Text 
-        text="Cadastro de Famílias"
+        text="Famílias"
         weight="bold"
         size="xl"
       />
+      
+      <Button @click="handleAddFamily">
+        <ph-plus :size="20" />
+        
+        <span class="hidden md:block">
+          Adicionar
+        </span>
+      </Button>
     </div>
 
-    <Wrapper>
-      <div class="flex justify-between items-center w-full my-5">
+    <div class="bg-background-accent rounded-3xl border border-neutral my-8">
+      <div class="flex justify-between items-center w-full p-5">
         <Search
           v-model="search"
           placeholder="Buscar família"
         />
-
-        <Button @click="handleAddFamily">
-          <ph-plus :size="20" />
-        
-          <span class="hidden md:block">
-            Adicionar
-          </span>
-        </Button>
       </div>
 
       <div
         v-if="isLoading || (!isLoading && !families.length)"
-        class="flex justify-center items-center w-full text-white my-10"
+        class="flex justify-center items-center w-full text-white p-10"
       >
         <Loader
           v-if="isLoading"
@@ -134,68 +129,51 @@ const closeModal = () => {
         class="data-table relative overflow-x-auto my-3"
       >
         <table class="w-full text-left text-gray-500">
-          <thead class="border-b border-gray-700 text-gray-500">
+          <thead class="border-y border-neutral text-font-accent">
             <tr>
               <th
                 v-for="(item, i) in tableHead"
                 :key="i"
                 scope="col"
-                class="px-6 py-3"
+                class="px-8 py-4"
               >
                 {{ item }}
               </th>
             </tr>
-          </thead>
-
+          </thead> 
           <tbody>
             <tr
               v-for="(item, i) in families"
               :key="i"
-              class="border-b border-gray-700 hover:bg-gray-700 hover:text-white"
+              :class="[ 'hover:bg-neutral hover:text-white', i !== families.length - 1 ? 'border-b border-neutral' : '' ]"
             >
               <th
                 scope="row"
-                class="w-[10%] px-6 py-4 font-medium text-gray-500 whitespace-nowrap"
+                class="px-8 py-4 font-medium text-font-accent whitespace-nowrap"
               >
                 #{{ i + 1 }}
-              </th>
-
-              <td class="px-6 py-4">
-                <div class="flex justify-start items-center">
-                  <svg
-                    v-if="item.drawn"
-                    class="w-3.5 h-3.5 mr-2 text-green-500 dark:text-green-400 flex-shrink-0"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                  </svg>
-
-                  <svg
-                    v-else
-                    class="w-3.5 h-3.5 mr-2 text-gray-500 dark:text-gray-400 flex-shrink-0"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                  </svg>
-      
-                  {{ item.name }}
-                </div>
-              </td>
-
-              <td class="w-[20%] px-6 py-4">
+              </th> 
+              <td class="px-8 py-4 text-white">
+                {{ item.name }}
+              </td> 
+              <td class="px-8 py-4">
+                <Badge
+                  :label="item.drawn ? 'Sorteado' : 'Pendente'"
+                  :color="item.drawn ? 'success' : 'secondary'"
+                /> 
+              </td> 
+              <td class="px-8 py-4 text-white">
+                10/05/2025
+              </td> 
+              <td class="px-8 py-4">
                 <div class="flex gap-3">
                   <Button
                     size="small"
+                    color="secondary"
                     @click="handleEditFamily(item)"
                   >
                     <ph-note-pencil :size="20" />
-                  </Button>
+                  </Button> 
                   <Button
                     size="small"
                     color="danger"
@@ -209,7 +187,7 @@ const closeModal = () => {
           </tbody>
         </table>
       </div>
-    </Wrapper>
+    </div>
 
     <Dialog
       ref="dialogRef"

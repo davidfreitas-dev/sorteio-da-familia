@@ -28,24 +28,23 @@ module.exports = {
         'success-hover': '#54cfa0',
         'success-focus': '#32a87a',
         'success-pressed': '#278a65',
-        'success-accent': '#e6f6f0',
+        'success-accent': '#193a30',
 
         'warning': '#e5a84a',
         'warning-hover': '#ecb55f',
         'warning-focus': '#d19a3b',
         'warning-pressed': '#b37f27',
-        'warning-accent': '#fdf3e6',
+        'warning-accent': '#3f2e14',
 
         'danger': '#d35c5c',
         'danger-hover': '#df7373',
         'danger-focus': '#c54f4f',
         'danger-pressed': '#a73e3e',
-        'danger-accent': '#f9eaea',
+        'danger-accent': '#3b1f1f',
 
         'secondary': '#7a7a7a',
         'disabled': '#444444',
         'neutral': '#2e2f2e',
-        'accent': '#222423',
 
         'font': '#ffffff',
         'font-accent': '#c7c7c9',
