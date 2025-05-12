@@ -121,16 +121,20 @@ const closeModal = () => {
     </div>
 
     <div class="bg-background-accent rounded-3xl border border-neutral my-8">
-      <div class="flex justify-between items-center gap-5 w-full p-5">
-        <Search
-          v-model="search"
-          placeholder="Buscar família"
-        />
+      <div class="flex flex-col md:flex-row gap-4 w-full p-5">
+        <div class="w-full md:w-1/2">
+          <Search
+            v-model="search"
+            placeholder="Buscar por nome"
+          />
+        </div>
 
-        <Select
-          v-model="selectedFilter"
-          :options="filterOptions"
-        />
+        <div class="w-full md:w-1/2">
+          <Select
+            v-model="selectedFilter"
+            :options="filterOptions"
+          />
+        </div>
       </div>
 
       <div

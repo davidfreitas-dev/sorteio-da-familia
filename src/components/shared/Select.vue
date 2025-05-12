@@ -36,7 +36,7 @@ watch(selectedOption, (newValue) => {
 <template>
   <Listbox v-model="selectedOption">
     <div class="relative w-full">
-      <ListboxButton class="flex items-center gap-3 h-12 w-full p-4 bg-transparent border border-disabled focus:outline-none focus:ring-2 focus:ring-success rounded-xl text-left text-white placeholder:text-secondary">
+      <ListboxButton class="flex items-center gap-3 h-[52px] w-full p-4 bg-transparent border border-disabled focus:outline-none focus:ring-2 focus:ring-success rounded-xl text-left text-white placeholder:text-secondary">
         <span class="flex-1 truncate text-white">
           {{ selectedOption.name }}
         </span>

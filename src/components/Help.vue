@@ -32,14 +32,14 @@ const solutions = [
         leave-to-class="translate-y-1 opacity-0"
       >
         <PopoverPanel class="absolute right-0 -top-[450px] z-10 mt-3 w-[500px] transform px-4">
-          <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-            <div class="bg-gray-800 p-6">
+          <div class="bg-background-accent overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+            <div class="p-6">
               <span class="block text-2xl text-gray-400">
                 Utilize os comandos abaixo
               </span>
             </div>
 
-            <div class="relative grid gap-8 bg-gray-800 px-7 pb-7">
+            <div class="relative grid gap-8 px-7 pb-7">
               <div
                 v-for="(item, index) in solutions"
                 :key="index"
