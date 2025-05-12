@@ -9,6 +9,7 @@ import { PhPlus, PhTrash, PhNotePencil, PhArrowLeft } from '@phosphor-icons/vue'
 import Wrapper from '@/components/shared/Wrapper.vue';
 import Text from '@/components/shared/Text.vue';
 import Search from '@/components/shared/Search.vue';
+import Select from '@/components/shared/Select.vue';
 import Button from '@/components/shared/Button.vue';
 import Badge from '@/components/shared/Badge.vue';
 import Loader from '@/components/shared/Loader.vue';
@@ -34,14 +35,30 @@ onMounted(() => {
   loadData();
 });
 
+const filterOptions = [
+  { name: 'Todos', value: 'all' },
+  { name: 'Sorteados', value: 'drawn' },
+  { name: 'Não sorteados', value: 'not_drawn' },
+];
+const selectedFilter = ref(filterOptions[0]);
+
 const families = computed(() => {
-  if (!search.value.trim()) return familyStore.families;
+  let filtered = familyStore.families;
 
-  const lowerSearch = search.value.toLowerCase();
+  if (selectedFilter.value.value === 'drawn') {
+    filtered = filtered.filter(f => f.drawn);
+  } else if (selectedFilter.value.value === 'not_drawn') {
+    filtered = filtered.filter(f => !f.drawn);
+  }
 
-  return familyStore.families.filter(family =>
-    family.name.toLowerCase().includes(lowerSearch)
-  );
+  if (search.value.trim()) {
+    const lowerSearch = search.value.toLowerCase();
+    filtered = filtered.filter(family =>
+      family.name.toLowerCase().includes(lowerSearch)
+    );
+  }
+
+  return filtered;
 });
 
 const handleDebounce = debounce((searchValue) => {
@@ -104,10 +121,15 @@ const closeModal = () => {
     </div>
 
     <div class="bg-background-accent rounded-3xl border border-neutral my-8">
-      <div class="flex justify-between items-center w-full p-5">
+      <div class="flex justify-between items-center gap-5 w-full p-5">
         <Search
           v-model="search"
           placeholder="Buscar família"
+        />
+
+        <Select
+          v-model="selectedFilter"
+          :options="filterOptions"
         />
       </div>
 
@@ -158,8 +180,8 @@ const closeModal = () => {
               </td> 
               <td class="px-8 py-4">
                 <Badge
-                  :label="item.drawn ? 'Sorteado' : 'Pendente'"
-                  :color="item.drawn ? 'success' : 'secondary'"
+                  :label="item.drawn ? 'Sorteado' : 'Disponível'"
+                  :color="item.drawn ? 'secondary' : 'success'"
                 /> 
               </td> 
               <td class="px-8 py-4 text-white">
