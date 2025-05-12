@@ -38,7 +38,7 @@ onMounted(() => {
 const filterOptions = [
   { name: 'Todos', value: 'all' },
   { name: 'Sorteados', value: 'drawn' },
-  { name: 'Não sorteados', value: 'not_drawn' },
+  { name: 'Disponíveis', value: 'not_drawn' },
 ];
 const selectedFilter = ref(filterOptions[0]);
 
@@ -172,23 +172,23 @@ const closeModal = () => {
             >
               <th
                 scope="row"
-                class="px-8 py-4 font-medium text-font-accent whitespace-nowrap"
+                class="px-8 py-4 w-[5%] max-w-[50px] font-medium text-font-accent whitespace-nowrap"
               >
                 #{{ i + 1 }}
               </th> 
-              <td class="px-8 py-4 text-font">
+              <td class="px-8 py-4 w-[40%] max-w-[400px] text-font">
                 {{ item.name }}
               </td> 
-              <td class="px-8 py-4">
+              <td class="px-8 py-4 w-[10%] max-w-[100px]">
                 <Badge
                   :label="item.drawn ? 'Sorteado' : 'Disponível'"
-                  :color="item.drawn ? 'secondary' : 'success'"
+                  :color="item.drawn ? 'success' : 'secondary'"
                 /> 
               </td> 
-              <td class="px-8 py-4 text-font">
-                10/05/2025
+              <td class="px-8 py-4 w-[30%] max-w-[300px] text-font">
+                {{ $filters.formatDate(item.updatedAt) }}
               </td> 
-              <td class="px-8 py-4">
+              <td class="px-8 py-4 w-[15%] max-w-[150px]">
                 <div class="flex gap-3">
                   <Button
                     size="small"

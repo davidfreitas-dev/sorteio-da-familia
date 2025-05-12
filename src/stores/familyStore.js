@@ -33,7 +33,8 @@ export const useFamilyStore = defineStore('familyStore', () => {
       unsubscribeFamilies.value = onSnapshot(q, (snapshot) => {
         families.value = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          updatedAt: doc.data().updatedAt?.toDate() || null
         }));
 
         resolve();
@@ -58,7 +59,8 @@ export const useFamilyStore = defineStore('familyStore', () => {
       unsubscribeFamiliesNotDrawn.value = onSnapshot(q, (snapshot) => {
         familiesNotDrawn.value = snapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          updatedAt: doc.data().updatedAt?.toDate() || null
         }));
       
         resolve();
