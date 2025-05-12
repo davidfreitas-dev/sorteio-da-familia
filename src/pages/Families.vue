@@ -48,7 +48,7 @@ const families = computed(() => {
   if (selectedFilter.value.value === 'drawn') {
     filtered = filtered.filter(f => f.drawn);
   } else if (selectedFilter.value.value === 'not_drawn') {
-    filtered = filtered.filter(f => !f.drawn);
+    filtered = filtered.filter(f => f.drawn === false);
   }
 
   if (search.value.trim()) {
