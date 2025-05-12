@@ -1,6 +1,26 @@
-# sorteio-da-familia
+# 🎁 Sorteio da Família
 
-This template should help get you started developing with Vue 3 in Vite (Tailwind CSS + ESLint).
+Uma aplicação web interativa para realizar sorteios entre famílias cadastradas, com controle de sorteios anteriores e reinício automático da lista. Ideal para eventos familiares, festas e confraternizações.
+
+---
+
+## 🚀 Funcionalidades
+
+- Cadastro de famílias participantes.
+- Sorteio aleatório de uma família por vez.
+- Cada família é sorteada apenas uma vez por rodada.
+- Reinício automático após todas as famílias serem sorteadas.
+- Persistência dos dados em **Firebase Firestore**.
+
+---
+
+## 🧱 Tecnologias Utilizadas
+
+- [Vue 3](https://vuejs.org/) – Framework JavaScript progressivo
+- [Pinia](https://pinia.vuejs.org/) – Gerenciador de estado oficial do Vue
+- [Vue Router](https://router.vuejs.org/) – Gerenciamento de rotas
+- [Tailwind CSS](https://tailwindcss.com/) – Utilitário de CSS moderno
+- [Firebase Firestore](https://firebase.google.com/products/firestore) – Banco de dados NoSQL em tempo real
 
 ## Recommended IDE Setup
 
