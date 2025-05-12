@@ -72,7 +72,7 @@ defineExpose({
                     <div class="modal-header flex justify-between items-center">
                       <DialogTitle
                         as="h3"
-                        class="text-2xl font-semibold leading-6 text-white"
+                        class="text-2xl font-semibold leading-6 text-font"
                       >
                         {{ title }}
                       </DialogTitle>

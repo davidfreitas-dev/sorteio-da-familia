@@ -23,7 +23,7 @@ const updateValue = (event) => {
   <div class="flex items-center gap-3 h-[52px] w-full p-4 bg-transparent border border-disabled focus-within:border-none rounded-xl focus-within:ring-2 ring-success">
     <input
       type="text"
-      class="flex-1 bg-transparent text-base text-white placeholder:text-secondary outline-none"
+      class="flex-1 bg-transparent text-base text-font placeholder:text-secondary outline-none"
       :value="modelValue"
       :placeholder="placeholder"
       @input="updateValue"

@@ -36,8 +36,8 @@ watch(selectedOption, (newValue) => {
 <template>
   <Listbox v-model="selectedOption">
     <div class="relative w-full">
-      <ListboxButton class="flex items-center gap-3 h-[52px] w-full p-4 bg-transparent border border-disabled focus:outline-none focus:ring-2 focus:ring-success rounded-xl text-left text-white placeholder:text-secondary">
-        <span class="flex-1 truncate text-white">
+      <ListboxButton class="flex items-center gap-3 h-[52px] w-full p-4 bg-transparent border border-disabled focus:outline-none focus:ring-2 focus:ring-success rounded-xl text-left text-font placeholder:text-secondary">
+        <span class="flex-1 truncate text-font">
           {{ selectedOption.name }}
         </span>
         <PhCaretDown :size="20" color="grey" />
@@ -58,7 +58,7 @@ watch(selectedOption, (newValue) => {
           >
             <li
               :class="[
-                active ? 'bg-success-accent text-white' : 'text-white',
+                active ? 'bg-success-accent text-font' : 'text-font',
                 'relative cursor-pointer select-none py-4 pl-10 pr-4',
               ]"
             >

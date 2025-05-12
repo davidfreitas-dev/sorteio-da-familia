@@ -89,12 +89,9 @@ const handleDeleteFamily = (family) => {
 };
 
 const deleteFamily = async () => {
-  try {
+  await withLoading(async () => {
     await familyStore.deleteFamily(selectedFamily.value.id);
-    console.log('Família excluída com sucesso');
-  } catch (error) {
-    console.error('Erro ao excluir família:', error);
-  }
+  }, 'Falha ao excluir o registro.');
 };
 
 const closeModal = () => {
@@ -139,7 +136,7 @@ const closeModal = () => {
 
       <div
         v-if="isLoading || (!isLoading && !families.length)"
-        class="flex justify-center items-center w-full text-white p-10"
+        class="flex justify-center items-center w-full text-font p-10"
       >
         <Loader
           v-if="isLoading"
@@ -171,7 +168,7 @@ const closeModal = () => {
             <tr
               v-for="(item, i) in families"
               :key="i"
-              :class="[ 'hover:bg-neutral hover:text-white', i !== families.length - 1 ? 'border-b border-neutral' : '' ]"
+              :class="[ 'hover:bg-neutral hover:text-font', i !== families.length - 1 ? 'border-b border-neutral' : '' ]"
             >
               <th
                 scope="row"
@@ -179,7 +176,7 @@ const closeModal = () => {
               >
                 #{{ i + 1 }}
               </th> 
-              <td class="px-8 py-4 text-white">
+              <td class="px-8 py-4 text-font">
                 {{ item.name }}
               </td> 
               <td class="px-8 py-4">
@@ -188,7 +185,7 @@ const closeModal = () => {
                   :color="item.drawn ? 'secondary' : 'success'"
                 /> 
               </td> 
-              <td class="px-8 py-4 text-white">
+              <td class="px-8 py-4 text-font">
                 10/05/2025
               </td> 
               <td class="px-8 py-4">

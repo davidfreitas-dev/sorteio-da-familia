@@ -56,7 +56,7 @@ const handleSave = async (event) => {
       @on-keyup-enter="handleSave"
     />
 
-    <div class="flex gap-2 text-white my-5">
+    <div class="flex gap-2 text-font my-5">
       <span>Sorteado</span>
       <Switch v-model="family.drawn" />
     </div>

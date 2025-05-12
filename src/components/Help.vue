@@ -18,7 +18,7 @@ const solutions = [
     >
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="group inline-flex items-center rounded-md bg-transparent px-3 py-2 text-base font-medium text-white hover:text-opacity-100 focus:outline-none"
+        class="group inline-flex items-center rounded-md bg-transparent px-3 py-2 text-base font-medium text-font hover:text-opacity-100 focus:outline-none"
       >
         <ph-question :size="60" />
       </PopoverButton>

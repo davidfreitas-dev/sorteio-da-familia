@@ -54,9 +54,9 @@ const ToastIcon = computed(() => {
       role="alert"
       class="toast"
       :class="{
-        'bg-success text-white': props.toastData.type === 'success',
-        'bg-red-400 text-white': props.toastData.type === 'error',
-        'bg-yellow-400 text-white': props.toastData.type === 'info'
+        'bg-success text-font': props.toastData.type === 'success',
+        'bg-red-400 text-font': props.toastData.type === 'error',
+        'bg-yellow-400 text-font': props.toastData.type === 'info'
       }"
     >
       <component

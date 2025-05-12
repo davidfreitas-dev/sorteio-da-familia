@@ -24,7 +24,7 @@ defineExpose({explode});
 </script>
 
 <template>
-  <div class="content flex-1 flex flex-col justify-center items-center w-full h-1/4 overflow-hidden text-white">
+  <div class="content flex-1 flex flex-col justify-center items-center w-full h-1/4 overflow-hidden text-font">
     <ConfettiExplosion
       v-if="visible"
       :stage-width="1200"
