@@ -21,7 +21,7 @@ const router = useRouter();
 const familyStore = useFamilyStore();
 const search = ref('');
 const selectedFamily = ref(null);
-const tableHead = reactive(['#', 'Nome', 'Status', 'Atualizado em', 'Ações']);
+const tableHead = reactive(['#', 'Nome', 'Status', 'Sorteado em', 'Ações']);
 
 const { isLoading, withLoading } = useLoading();
 
@@ -186,7 +186,7 @@ const closeModal = () => {
                 /> 
               </td> 
               <td class="px-8 py-4 w-[30%] max-w-[300px] text-font">
-                {{ $filters.formatDate(item.updatedAt) }}
+                {{ $filters.formatDate(item.drawnAt) }}
               </td> 
               <td class="px-8 py-4 w-[15%] max-w-[150px]">
                 <div class="flex gap-3">

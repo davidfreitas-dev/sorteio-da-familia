@@ -75,7 +75,7 @@ const resultRef = ref(undefined);
 
 const confirmResult = async () => {
   if (!result.value) return;
-  await familyStore.updateFamily(result.value.id, { drawn: true });
+  await familyStore.confirmFamilyDraw(result.value.id);
   resultRef.value?.explode();
 };
 

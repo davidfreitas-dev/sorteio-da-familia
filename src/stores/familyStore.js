@@ -31,11 +31,14 @@ export const useFamilyStore = defineStore('familyStore', () => {
 
     return new Promise((resolve, reject) => {
       unsubscribeFamilies.value = onSnapshot(q, (snapshot) => {
-        families.value = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          updatedAt: doc.data().updatedAt?.toDate() || null
-        }));
+        families.value = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            drawnAt: data.drawnAt?.toDate?.() || null
+          };
+        });
 
         resolve();
       }, (error) => {
@@ -57,12 +60,15 @@ export const useFamilyStore = defineStore('familyStore', () => {
 
     return new Promise((resolve, reject) => {
       unsubscribeFamiliesNotDrawn.value = onSnapshot(q, (snapshot) => {
-        familiesNotDrawn.value = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          updatedAt: doc.data().updatedAt?.toDate() || null
-        }));
-      
+        familiesNotDrawn.value = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            drawnAt: data.drawnAt?.toDate?.() || null
+          };
+        });
+
         resolve();
       }, (error) => {
         reject(error);
@@ -81,8 +87,10 @@ export const useFamilyStore = defineStore('familyStore', () => {
   };
 
   const updateFamily = async (id, updatedData) => {
+    const { id: _, ...dataWithoutId } = updatedData;
+
     await updateDoc(doc(db, 'families', id), {
-      ...updatedData,
+      ...dataWithoutId,
       updatedAt: serverTimestamp()
     });
   };
@@ -95,6 +103,13 @@ export const useFamilyStore = defineStore('familyStore', () => {
     const snapshot = await getDoc(doc(db, 'families', id));
     if (!snapshot.exists()) return null;
     return { id: snapshot.id, ...snapshot.data() };
+  };
+
+  const confirmFamilyDraw = async (id) => {
+    await updateDoc(doc(db, 'families', id), {
+      drawn: true,
+      drawnAt: serverTimestamp()
+    });
   };
 
   const resetFamiliesDrawnStatus = async () => {
@@ -128,6 +143,7 @@ export const useFamilyStore = defineStore('familyStore', () => {
     updateFamily,
     deleteFamily,
     getFamilyById,
+    confirmFamilyDraw,
     resetFamiliesDrawnStatus,
     stopListeningFamilies,
     resetFamilies
