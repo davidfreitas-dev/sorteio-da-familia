@@ -4,13 +4,15 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
   onSnapshot,
   query,
-  orderBy,
   where,
+  orderBy,
+  limit,
   serverTimestamp,
   writeBatch
 } from 'firebase/firestore';
@@ -105,6 +107,27 @@ export const useFamilyStore = defineStore('familyStore', () => {
     return { id: snapshot.id, ...snapshot.data() };
   };
 
+  const getLastDrawnFamily = async () => {
+    const q = query(
+      collection(db, 'families'),
+      where('drawn', '==', true),
+      orderBy('drawnAt', 'desc'),
+      limit(1)
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) return null;
+
+    const docData = snapshot.docs[0];
+
+    return {
+      id: docData.id,
+      ...docData.data(),
+      drawnAt: docData.data().drawnAt?.toDate?.() || null
+    };
+  };
+
   const confirmFamilyDraw = async (id) => {
     await updateDoc(doc(db, 'families', id), {
       drawn: true,
@@ -143,6 +166,7 @@ export const useFamilyStore = defineStore('familyStore', () => {
     updateFamily,
     deleteFamily,
     getFamilyById,
+    getLastDrawnFamily,
     confirmFamilyDraw,
     resetFamiliesDrawnStatus,
     stopListeningFamilies,

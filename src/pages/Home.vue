@@ -104,6 +104,7 @@ const { withLoading } = useLoading();
 const loadData = async () => {
   await withLoading(async () => {
     await familyStore.fetchFamiliesNotDrawn();
+    result.value = await familyStore.getLastDrawnFamily();
   });
 };
 
