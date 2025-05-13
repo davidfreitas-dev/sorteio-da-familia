@@ -172,11 +172,11 @@ const closeModal = () => {
             >
               <th
                 scope="row"
-                class="px-8 py-4 w-[5%] max-w-[50px] truncate whitespace-nowrap overflow-hidden font-medium text-font-accent"
+                class="px-8 py-4 w-[10%] max-w-[100px] truncate whitespace-nowrap overflow-hidden font-medium text-font-accent"
               >
                 #{{ i + 1 }}
               </th> 
-              <td class="px-8 py-4 w-[40%] max-w-[400px] truncate whitespace-nowrap overflow-hidden text-font">
+              <td class="px-8 py-4 w-[35%] max-w-[350px] truncate whitespace-nowrap overflow-hidden text-font">
                 {{ item.name }}
               </td> 
               <td class="px-8 py-4 w-[10%] max-w-[100px]">
