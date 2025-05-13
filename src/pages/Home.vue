@@ -7,6 +7,7 @@ import { useFamilyStore } from '@/stores/familyStore';
 import { PhHeart } from '@phosphor-icons/vue';
 
 import Progressbar from '@/components/shared/Progressbar.vue';
+import Loader from '@/components/shared/Loader.vue';
 import Dialog from '@/components/shared/Dialog.vue';
 import Text from '@/components/shared/Text.vue';
 import Help from '@/components/Help.vue';
@@ -99,7 +100,7 @@ const removeEventListeners = () => {
   window.removeEventListener('keyup', handleKeyPress);
 };
 
-const { withLoading } = useLoading();
+const { isLoading, withLoading } = useLoading();
 
 const loadData = async () => {
   await withLoading(async () => {
@@ -146,30 +147,36 @@ const handleKeyPress = (event) => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center h-screen w-full">
-    <Progressbar
-      :progress="progress"
-      class="mb-3"
-    />
-    
-    <Result
-      ref="resultRef"
-      :result="result"
-    />
+  <div class="relative h-screen w-full flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center flex-grow w-full">
+      <Progressbar
+        :progress="progress"
+        class="mb-3"
+      />
 
-    <Help />
+      <Loader
+        v-if="isLoading"
+        color="primary"
+      />
 
-    <Text
-      v-if="isOver"
-      text="Todos os nomes foram sorteados!"
-      size="xl"
-      class="text-danger text-center mb-16 uppercase animate__animated animate__pulse animate__infinite" 
-    />
+      <Result
+        v-if="!isLoading"
+        ref="resultRef"
+        :result="result"
+      />
 
-    <div
-      v-else
-      class="flex text-lg md:text-xl lg:text-2xl text-gray-400 mb-16"
-    >
+      <Help />
+
+      <Text
+        v-if="!isLoading && isOver"
+        text="Todos os nomes foram sorteados!"
+        size="xl"
+        class="text-danger text-center mb-16 uppercase animate__animated animate__pulse animate__infinite" 
+      />
+    </div>
+
+    <!-- Rodapé fixo na parte inferior -->
+    <div class="absolute bottom-4 flex text-lg md:text-xl lg:text-2xl text-font-accent p-5">
       Desenvolvido com 
       <ph-heart
         :size="24"

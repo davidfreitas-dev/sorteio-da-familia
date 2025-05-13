@@ -172,11 +172,11 @@ const closeModal = () => {
             >
               <th
                 scope="row"
-                class="px-8 py-4 w-[5%] max-w-[50px] font-medium text-font-accent whitespace-nowrap"
+                class="px-8 py-4 w-[5%] max-w-[50px] truncate whitespace-nowrap overflow-hidden font-medium text-font-accent"
               >
                 #{{ i + 1 }}
               </th> 
-              <td class="px-8 py-4 w-[40%] max-w-[400px] text-font">
+              <td class="px-8 py-4 w-[40%] max-w-[400px] truncate whitespace-nowrap overflow-hidden text-font">
                 {{ item.name }}
               </td> 
               <td class="px-8 py-4 w-[10%] max-w-[100px]">
@@ -185,7 +185,7 @@ const closeModal = () => {
                   :color="item.drawn ? 'success' : 'secondary'"
                 /> 
               </td> 
-              <td class="px-8 py-4 w-[30%] max-w-[300px] text-font">
+              <td class="px-8 py-4 w-[30%] max-w-[300px] truncate whitespace-nowrap overflow-hidden text-font">
                 {{ $filters.formatDate(item.drawnAt) }}
               </td> 
               <td class="px-8 py-4 w-[15%] max-w-[150px]">
